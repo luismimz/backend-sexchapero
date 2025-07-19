@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id               Int      @id @default(autoincrement())
+  email            String   @unique
+  password         String
+  username         String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime? @updatedAt
+  profile          Profile?
+  loginLog        LoginLog[]
+}
+model LoginLog {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  ip             String
+  userAgent      String?
+  device         String?
+  browser        String?
+  os             String?
+  isp            String?
+  connectionType String?
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+model Profile {
+  id        Int     @id @default(autoincrement())
+  userId    Int     @unique
+  avatar    String? //Ruta a la imagen del avatar principal
+  gallery   Json? //Array de imagenes: ["/img/profiles/imagen.jpg"]
+  videos    Json? //Array de videos: ["ruta o url del video"]
+  user      User    @relation(fields: [userId], references: [id])
+  //relacion inversa para los campos custom
+  customFields  ProfileCustomField[]
+}
+
+model ProfileFieldDefinition {
+  id        Int      @id @default(autoincrement() )
+  name      String   //Clave interna: "altura"
+  label     String   //Etiqueta visible: "Altura"
+  type      String   //"String", "int", "date", "select", etc
+  required  Boolean  @default(false)
+  options   Json?    //Opciones si es select o multiselect
+  unique    Boolean  @default(false)
+  //Relación inversa (opcional, para facilidad)
+  customFields ProfileCustomField[]
+}
+
+model ProfileCustomField {
+  id          Int   @id @default(autoincrement())
+  profileId   Int
+  fieldId     Int
+  valueString String?
+  valueInt    Int?
+  valueBool   Boolean?
+  valueDate   DateTime?
+  valueJson   Json?
+  //relaciones
+  profile     Profile   @relation(fields: [profileId], references: [id])
+  field     ProfileFieldDefinition  @relation(fields: [fieldId], references: [id])
+  }
