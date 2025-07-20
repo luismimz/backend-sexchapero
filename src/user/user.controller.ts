@@ -4,9 +4,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth'; // Importar el guardia JWT 
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
-import { use } from 'passport';
+import { AuthGuard } from '@nestjs/passport'; // Importar AuthGuard para proteger las rutas
 
-
+@UseGuards(AuthGuard('jwt')) // Aplicar el guardia JWT a este controlador
+// Esto asegura que todas las rutas de este controlador requieren autenticación JWT
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

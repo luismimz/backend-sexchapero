@@ -72,3 +72,18 @@ model ProfileCustomField {
   profile     Profile   @relation(fields: [profileId], references: [id])
   field     ProfileFieldDefinition  @relation(fields: [fieldId], references: [id])
   }
+
+  model Plugin {
+    id          Int     @id @default(autoincrement())
+    name        String  
+    key         String  @unique
+    type        String
+    active      Boolean @default(true)
+    config      Json //almacena todas las configuraciones y opciones personalizadas del plugin
+    version     String  @default("1.0.0")
+    description String?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    deletedAt   DateTime? //no se borra completamente es rescatable por si hay error o incidencia 
+  }
+
