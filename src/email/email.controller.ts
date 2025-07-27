@@ -16,7 +16,7 @@ export class EmailController {
   @Post('send-template')
   @UseGuards(AuthGuard('jwt'), RolesGuard) // Protege la ruta con AuthGuard y RolesGuard
   @Roles('admin', 'moderator') // Solo usuarios con roles 'admin' o 'moderator' pueden acceder
-  async sendTemplateEmail(@Request() req, @Body() body: SendTemplateDto) {
+  async sendTemplateEmail( @Request() req, @Body() body: SendTemplateDto) {
     console.log('User:', req.user); // Log del usuario autenticado
     // Aqui nest valida el body automaticamente con el DTO SendTemplateDto
     // Si no se cumplen las validaciones, lanzará un error 400 automáticamente

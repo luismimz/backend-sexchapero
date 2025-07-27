@@ -54,7 +54,7 @@ console.log('Contraseña válida:', isPasswordValid);
 // Método 2: login con JWT (o por ahora simple)
 async login(user: any) {
   console.log('Iniciando sesión para el usuario:', user.email);
-  const payload = { sub: user.id, email: user.email};
+  const payload = { sub: user.id, email: user.email, role: user.role };
   const token = await this.jwtService.signAsync(payload, {
     expiresIn: '1h', // Puedes ajustar el tiempo de expiración según tus necesidades   
   algorithm: 'HS256', // Asegúrate de que el algoritmo coincida con tu configuración de JWT 
