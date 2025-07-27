@@ -66,6 +66,7 @@ async login(user: any) {
     id: user.id,
     email: user.email,
     username: user.username,
+    role: user.role, // Asegúrate de que el modelo de usuario tenga un campo 'role' 
   });
   // Aquí puedes devolver el token y los datos del usuario
 
@@ -76,6 +77,7 @@ async login(user: any) {
       id: user.id,
       email: user.email,
       username: user.username,
+      role : user.role, // Asegúrate de que el modelo de usuario tenga un campo 'role'
     },
   };}
   async loginWithMagicLink(token: string) {

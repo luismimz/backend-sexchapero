@@ -7,6 +7,8 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EmailService } from 'src/email/email.service';
 import { JwtStrategy } from './jwt.strategy';
+import { EmailModule } from 'src/email/email.module';
+import { TemplateModule } from 'src/email/template/template.module';
 @Module({
   imports: [
     PrismaModule,
@@ -18,6 +20,8 @@ import { JwtStrategy } from './jwt.strategy';
       secret: configService.get<string>('JWT_SECRET'),// ⚠️ Usa una variable de entorno real en producción
       signOptions: { expiresIn: '1h', algorithm: 'HS256' }, // Asegúrate de que el algoritmo coincida con tu configuración de JWT
     }),}),
+    EmailModule, // Importa EmailModule para usar EmailService
+    TemplateModule, // Importa TemplateModule si necesitas servicios de plantillas
   ],
   controllers: [AuthController],
   providers: [AuthService, EmailService, JwtStrategy],

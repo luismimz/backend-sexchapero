@@ -17,6 +17,7 @@ model User {
   email            String   @unique
   password         String
   username         String   @unique
+  role             String[]   @default(["user"]) 
   createdAt        DateTime @default(now())
   updatedAt        DateTime? @updatedAt
   profile          Profile?
@@ -87,3 +88,19 @@ model ProfileCustomField {
     deletedAt   DateTime? //no se borra completamente es rescatable por si hay error o incidencia 
   }
 
+  model EmailTemplate {
+    id          String    @id @default(uuid())
+    key         String    @unique
+    subject     String  
+    text        String?
+    html        String?
+    type        EmailType
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+  }
+
+enum EmailType {
+  text
+  html
+  both
+}

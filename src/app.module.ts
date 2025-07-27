@@ -14,13 +14,18 @@ import { PaymentsModule } from './payments/payments.module';
 import { FieldsModule } from './fields/fields.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { PublicModule } from './public/public.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { SettingsModule } from './settings/settings.module';
+import { MessagingModule } from './messaging/messaging.module';
+import { LogsModule } from './logs/logs.module';
+import { EmailModule } from './email/email.module';
 @Module({
-  imports: [PluginsModule, ConfigModule.forRoot(
+  imports: [EmailModule , PluginsModule, ConfigModule.forRoot(
     {
       isGlobal: true, // Hace que las variables de entorno estén disponibles globalmente
       validationSchema:configValidationSchema, //join configValidationSchema
     }
-  ),PrismaModule, UserModule, AuthModule, PluginsModule, ProfilesModule, GalleryModule, PaymentsModule, FieldsModule, TicketsModule, PublicModule],
+  ),PrismaModule, UserModule, AuthModule, PluginsModule, ProfilesModule, GalleryModule, PaymentsModule, FieldsModule, TicketsModule, PublicModule, NotificationsModule, SettingsModule, MessagingModule, LogsModule],
   controllers: [AppController, PluginsController],
   providers: [AppService],
 })
