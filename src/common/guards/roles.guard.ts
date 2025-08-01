@@ -23,6 +23,11 @@ export class RolesGuard implements CanActivate {
     if (!user) {
       return requiredRoles.includes('public');
     }
+    console.log('--RolesGuard--');
+    console.log('User:', user);
+    console.log('Required Roles:', requiredRoles); 
+    console.log('User Roles:', user.role);
+    console.log('--------');
     //si tiene roles como array (como el de modelo user en prisma)
     return user.role?.some((role: string) => requiredRoles.includes(role));
     //si el role fuera un string seria:

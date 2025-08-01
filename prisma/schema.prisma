@@ -22,6 +22,7 @@ model User {
   updatedAt        DateTime? @updatedAt
   profile          Profile?
   loginLog        LoginLog[]
+  emailLogs       EmailLog[] @relation("UserEmailLogs") //
 }
 model LoginLog {
   id             Int      @id @default(autoincrement())
@@ -99,8 +100,25 @@ model ProfileCustomField {
     updatedAt   DateTime  @updatedAt
   }
 
-enum EmailType {
-  text
-  html
-  both
-}
+  enum EmailType {
+    text
+    html
+    both
+  }
+  model EmailLog {
+    id          Int       @id @default(autoincrement())
+    to          String    //destinatario
+    subject     String    
+    templateKey String?   // clave de la plantilla usada (si aplica)
+    sentById    Int?      // Id del usuario que envio (admin/moderador)
+    sentBy      User?     @relation("UserEmailLogs", fields: [sentById], references: [id])
+    status      String    // "ok", "error"
+    errorMsg    String?   // si hubo error, mensaje de error
+    ip          String?   // IP del admin/mod que envia
+    userAgent   String?   // Navegador usado
+    html        String?   // HTML del correo (solo email criticos)
+    text        String?   // Texto plano de correo (solo email critico)
+    type        String    // "critico", "newsletter", "info", etc
+    replacements  String? // Guarda variables como JSON
+    createdAt   DateTime  @default(now())
+  }

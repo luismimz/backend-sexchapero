@@ -20,12 +20,27 @@ import { MessagingModule } from './messaging/messaging.module';
 import { LogsModule } from './logs/logs.module';
 import { EmailModule } from './email/email.module';
 @Module({
-  imports: [EmailModule , PluginsModule, ConfigModule.forRoot(
-    {
-      isGlobal: true, // Hace que las variables de entorno estén disponibles globalmente
-      validationSchema:configValidationSchema, //join configValidationSchema
-    }
-  ),PrismaModule, UserModule, AuthModule, PluginsModule, ProfilesModule, GalleryModule, PaymentsModule, FieldsModule, TicketsModule, PublicModule, NotificationsModule, SettingsModule, MessagingModule, LogsModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: configValidationSchema,
+    }),
+    PrismaModule,
+    EmailModule,
+    PluginsModule,
+    UserModule,
+    AuthModule,
+    ProfilesModule,
+    GalleryModule,
+    PaymentsModule,
+    FieldsModule,
+    TicketsModule,
+    PublicModule,
+    NotificationsModule,
+    SettingsModule,
+    MessagingModule,
+    LogsModule,
+  ],
   controllers: [AppController, PluginsController],
   providers: [AppService],
 })

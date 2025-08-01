@@ -6,11 +6,13 @@ import { PassportModule } from '@nestjs/passport';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EmailService } from 'src/email/email.service';
+import { QueueModule } from 'src/email/queue/queue.module';
 import { JwtStrategy } from './jwt.strategy';
 import { EmailModule } from 'src/email/email.module';
 import { TemplateModule } from 'src/email/template/template.module';
 @Module({
   imports: [
+    QueueModule, // Importa QueueModule para usar la cola de email
     PrismaModule,
     PassportModule,
     JwtModule.registerAsync({
